@@ -1,0 +1,29 @@
+{
+  "name": "rest-with-nodejs",
+  "version": "1.0.0",
+  "description": "Simple REST API with NodeJs",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "seeder": "node src/infra/seeder.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "thiiagoms",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "config": "^3.3.7",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.2",
+    "install": "^0.13.0",
+    "jsdom": "^19.0.0",
+    "mysql2": "^2.3.3",
+    "request": "^2.88.2",
+    "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
