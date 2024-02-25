@@ -6,11 +6,36 @@ class PokemonController {
         response.status(200).json(pokemon);
     };
 
+    static index = async (_, response) => {
+        const page = parseInt(_.query.page) || 1; // Página atual, padrão é 1
+        const pageSize = parseInt(_.query.pageSize) || 10; // Tamanho da página, padrão é 10
+    
+        try {
+            const totalCount = await Pokemon.count(); // Total de registros
+            
+            const { count, rows } = await Pokemon.findAndCountAll({
+                offset: (page - 1) * pageSize, // Calcula o deslocamento com base na página atual e no tamanho da página
+                limit: pageSize // Limite de resultados por página
+            });
+    
+            const totalPages = Math.ceil(totalCount / pageSize); // Total de páginas
+    
+            response.setHeader('X-Total-Count', totalCount); // Configura o cabeçalho X-Total-Count
+            response.status(200).json(rows);
+        } catch (error) {
+            console.error("Erro ao buscar pokemons:", error);
+            response.status(500).json({ error: "Erro ao buscar pokemons" });
+        }
+    };
+    
+
     static findById = async (request, response) => {
         let { id } = request.params;
         let pokemon = await Pokemon.findByPk(id);
         response.status(200).json(pokemon);
     };
+
+    
     
     static alterPokemon = async (request, response) => {
         try {
@@ -41,7 +66,7 @@ class PokemonController {
             if (secondAttribute) {
                 pokemon.secondAttribute = secondAttribute;
             }
-            if (typeof megaEvolution === 'boolean') {
+            if (megaEvolution) {
                 pokemon.megaEvolution = megaEvolution;
             }
     
