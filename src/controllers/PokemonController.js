@@ -19,8 +19,9 @@ class PokemonController {
             });
     
             const totalPages = Math.ceil(totalCount / pageSize); // Total de páginas
-    
-            response.setHeader('X-Total-Count', totalCount); // Configura o cabeçalho X-Total-Count
+            
+            response.setHeader("Access-Control-Expose-Headers","*");
+            response.setHeader('x-total-count', totalCount); // Configura o cabeçalho X-Total-Count
             response.status(200).json(rows);
         } catch (error) {
             console.error("Erro ao buscar pokemons:", error);
