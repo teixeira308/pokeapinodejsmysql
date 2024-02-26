@@ -1,9 +1,13 @@
+// user.router.js
 import express from 'express';
-import UserController from '../controllers/UserController.js';
-import handleValidations from '../middleware/handleValidations.js';
+import { signUp, signIn, protect } from '../controllers/UserController.js';
 
-const UsersRouter = express.Router();
+const usersRoute = express.Router(); // Corrigido o nome da variável
 
-UsersRouter.post("/register", userCreateValidation(), handleValidations.validate, UserController.registrarUsuario);
+usersRoute.post('/register', signUp);
+usersRoute.post('/login', signIn);
+usersRoute.get('/secret-route', protect, (req, res) => {
+  res.send('This is the secret content. Only logged in users can see that!');
+});
 
-export default UsersRouter;
+export default usersRoute; // Corrigido para exportar a rota correta
